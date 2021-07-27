@@ -1,0 +1,23 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    {% if entry %}
+        Edit entry
+    {% else %}
+        New entry
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    <form action="{% url 'encyclopedia:new' %}" method="post">
+        {% csrf_token %}
+        <input name="title" style="width: 80%; margin-bottom: 1rem;" class="form-control" placeholder="Add title" required>
+        <textarea name="content" style="width: 80%; overflow:auto" rows=10 class="form-control" placeholder="Add content" required></textarea>
+        <button type="submit" style="margin-top: 1rem;" class="btn btn-primary">Add</button>
+    </form>
+    {% if error %}
+        <div class="alert alert-danger" style="width: 80%; margin-top: 1rem" role="alert">
+            {{ error }}
+        </div>
+    {% endif %}
+{% endblock %}

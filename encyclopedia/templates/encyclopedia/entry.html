@@ -1,0 +1,32 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    {% if not possible_entries %}
+        {% if data %}
+            {{ entry }}
+        {% else %} 
+            {{ search }} not found
+        {% endif %}
+    {% else %}    
+        Search: {{ search }}
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+
+    {% if not possible_entries %}    
+        {% if data %}    
+            <a href="{% url 'encyclopedia:edit' entry %}" class="btn btn-primary">Edit</a>
+            {{ data|safe }}    
+        {% else %}
+            <h2>{{ search }} not found</h2>
+        {% endif %}
+    {% else %}
+        <ul>    
+            <h1>Search Results</h1>
+            {% for possible_entry in possible_entries %}
+                <li><a href="{% url 'encyclopedia:entry' possible_entry %}">{{ possible_entry }}</a></li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}
